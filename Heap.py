@@ -35,64 +35,30 @@ class MinimumHeap :
 
     def bubble_down(self, nodePosition) :
 
-        # Visit children and compares who is the smallest, then if parent is greather than 
-        # the smallest, interchange position with the smallest and finally calls itself
+        leftChildPosition = 2 * nodePosition + 1
 
-        if self.has_leftChild(nodePosition) and self.has_rightChild(nodePosition) :
+        rightChildPosition = leftChildPosition + 1
 
-            if self.heap[2 * nodePosition + 1] < self.heap[2 * nodePosition + 2] :
+        smaller = nodePosition
 
-                if self.heap[nodePosition] > self.heap[2 * nodePosition + 1] :
+        if self.is_valid(leftChildPosition) and self.heap[leftChildPosition] < self.heap[smaller] :
 
-                    self.swap_position(2 * nodePosition + 1, nodePosition)
+            smaller = leftChildPosition
 
-                    self.bubble_down(2 * nodePosition + 1)
+        if self.is_valid(rightChildPosition) and self.heap[rightChildPosition] < self.heap[smaller] :
 
-            else : 
+            smaller = rightChildPosition
 
-                if self.heap[nodePosition] > self.heap[2 * nodePosition + 2] :
+        if smaller != nodePosition :
 
-                    self.swap_position(2 * nodePosition + 2, nodePosition)
+            self.swap_position(nodePosition, smaller)
 
-                    self.bubble_down(2 * nodePosition + 2)
+            self.bubble_down(smaller)
 
-        elif self.has_leftChild(nodePosition) :
+       
+    def is_valid(self, nodePosition) :
 
-            if self.heap[nodePosition] > self.heap[2 * nodePosition + 1] :
-
-                self.swap_position(2 * nodePosition + 1, nodePosition)
-
-                self.bubble_down(2 * nodePosition + 1)
-
-        elif self.has_rightChild(nodePosition) :
-
-            if self.heap[nodePosition] > self.heap[2 * nodePosition + 2] :
-
-                self.swap_position(2 * nodePosition + 2, nodePosition)
-
-                self.bubble_down(2 * nodePosition + 2)
-
-        else :
-
-            return
-
-
-    def has_leftChild(self, nodePosition) :
-
-        posLeft = 2 * nodePosition + 1
-
-        if posLeft <= len(self.heap) - 1 :
-
-            return True
-
-        return False
-
-
-    def has_rightChild(self, nodePosition) :
-
-        posRight = 2 * nodePosition + 2
-
-        if posRight <= len(self.heap) - 1 :
+        if nodePosition <= len(self.heap) - 1 :
 
             return True
 
@@ -205,4 +171,3 @@ print()
 
 my_minHeap.pop()
 
-#my_secondHeap = MinimumHeap()
